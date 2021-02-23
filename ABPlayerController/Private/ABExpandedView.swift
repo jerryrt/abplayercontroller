@@ -83,14 +83,14 @@ class ABExpandedView: ABView {
         if !animateFlag { return toggle(toFrame: frame) }
         if toggleAnimation?.isAnimating ?? false { return }
         let effect = isCollapsed ?
-            NSViewAnimationFadeInEffect : NSViewAnimationFadeOutEffect
-        let toggleThumbnail: [String: AnyObject] = [
-            NSViewAnimationTargetKey: thumbnail,
-            NSViewAnimationEffectKey: effect as AnyObject,
+          NSViewAnimation.EffectName.fadeIn : NSViewAnimation.EffectName.fadeOut
+        let toggleThumbnail: [NSViewAnimation.Key: AnyObject] = [
+          NSViewAnimation.Key.target: thumbnail,
+          NSViewAnimation.Key.effect: effect as AnyObject,
         ]
-        let windowResize: [String: AnyObject] = [
-            NSViewAnimationTargetKey: window!,
-            NSViewAnimationEndFrameKey: NSValue(rect: frame),
+        let windowResize: [NSViewAnimation.Key: AnyObject] = [
+          NSViewAnimation.Key.target: window!,
+          NSViewAnimation.Key.effect: NSValue(rect: frame),
         ]
         let animations = [toggleThumbnail, windowResize]
         toggleAnimation = NSViewAnimation(viewAnimations: animations)
@@ -113,7 +113,7 @@ class ABExpandedView: ABView {
         if durationField.stringValue != newValue {
             durationField.stringValue = newValue
             var dummyString = ""
-            for i in newValue.characters {
+            for i in newValue {
                 switch i {
                 case ":":
                     dummyString += ":"
