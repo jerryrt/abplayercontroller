@@ -11,8 +11,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
+#if os(OSX)
 import Cocoa
+#elseif os(iOS)
+import UIKit
+#endif
 
 /// Types conforming to the `ABTrackInfo` protocol enable access to the metadata
 /// of the currently playing audio track.
@@ -28,5 +31,9 @@ public protocol ABTrackInfo {
     /// The total duration of the track in seconds.
     var duration: TimeInterval { get }
     /// The cover artwork for the track.
+    #if os(OSX)
     var artwork: NSImage { get }
+    #elseif os(iOS)
+    var artwork: UIImage { get }
+    #endif
 }
